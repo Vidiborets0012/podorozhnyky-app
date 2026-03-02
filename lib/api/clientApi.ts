@@ -2,6 +2,7 @@ import api from "./api";
 import { User } from "@/types/user";
 import { Story } from "@/types/index";
 import { Category } from "@/types/category";
+// import { AxiosError } from "axios";
 
 export type LoginRequest = { email: string; password: string };
 
@@ -19,16 +20,34 @@ export async function logout(): Promise<void> {
 
 export async function checkSession(): Promise<User | null> {
   try {
+    // 1. Пробуємо отримати юзера
     const res = await api.get<User>("/users/me");
+    // Тепер бекенд повертає 200 навіть якщо юзер не залогінений
+    // res.data може бути null
     return res.data;
   } catch {
-    try {
-      await api.post("/auth/refresh");
-      const res = await api.get<User>("/users/me");
-      return res.data;
-    } catch {
-      return null;
-    }
+    // const axiosError = error as AxiosError;
+    // 2. Якщо помилка 401 (Unauthorized) — можливо, треба оновити токен
+
+    // if (axiosError.response?.status === 401) {
+    //   try {
+    //     await api.post("/auth/refresh");
+    //     // Спроба №2 після рефрешу
+    //     const retryRes = await api.get<User>("/users/me");
+    //     // const res = await api.get<User>("/users/me");
+    //     return retryRes.data;
+    //     // return res.data;
+    //   } catch {
+    //     // Якщо рефреш не вдався — юзер точно гість, повертаємо null без помилки
+    //     return null;
+    //   }
+    // }
+    // 3. Якщо помилка 400 або інша — швидше за все, юзер не залогінений
+    // Повертаємо null, щоб AuthProvider зрозумів, що це гість
+
+    // Якщо сервер повернув помилку (наприклад, 500),
+    // ми все одно повертаємо null, щоб додаток не впав
+    return null;
   }
 }
 
