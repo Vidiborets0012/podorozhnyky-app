@@ -1,0 +1,233 @@
+:root {
+  --color-scheme-1-background: var(--color-white);
+  --color-neutral-darkest: #000;
+  --color-scheme-1-border: var(--opacity-neutral-darkest-15);
+  --color-scheme-1-text: var(--color-neutral-darkest);
+  --color-neutral-lighter: #d8d8d8;
+  --color-white: #fff;
+  --color-neutral-lightest: #f2f2f2;
+  --color-neutral-light: #b2b2b2;
+  --color-neutral: #7f7f7f;
+  --color-neutral-dark: #4c4c4c;
+  --color-neutral-darker: #191919;
+  --opacity-transparent: rgba(255, 255, 255, 0);
+  --color-scheme-1-foreground: var(--color-neutral-lightest);
+  --color-scheme-1-accent: var(--color-royal-blue);
+  --opacity-white-5: rgba(255, 255, 255, 0.05);
+  --opacity-white-10: rgba(255, 255, 255, 0.1);
+  --opacity-white-15: rgba(255, 255, 255, 0.15);
+  --opacity-white-20: rgba(255, 255, 255, 0.2);
+  --opacity-white-30: rgba(255, 255, 255, 0.3);
+  --opacity-white-40: rgba(255, 255, 255, 0.4);
+  --opacity-white-50: rgba(255, 255, 255, 0.5);
+  --opacity-white-60: rgba(255, 255, 255, 0.6);
+  --opacity-neutral-darkest-5: rgba(0, 0, 0, 0.05);
+  --opacity-neutral-darkest-10: rgba(0, 0, 0, 0.1);
+  --opacity-neutral-darkest-15: rgba(0, 0, 0, 0.15);
+  --opacity-neutral-darkest-20: rgba(0, 0, 0, 0.2);
+  --opacity-neutral-darkest-30: rgba(0, 0, 0, 0.3);
+  --opacity-neutral-darkest-40: rgba(0, 0, 0, 0.4);
+  --opacity-neutral-darkest-50: rgba(0, 0, 0, 0.5);
+  --opacity-neutral-darkest-60: rgba(0, 0, 0, 0.6);
+  --color-royal-blue-lightest: #f7f9ff;
+  --color-royal-blue-lighter: #e8eeff;
+  --color-royal-blue-light: #7a96ea;
+  --color-royal-blue: #4169e1;
+  --color-royal-blue-dark: #3454b4;
+  --color-royal-blue-darker: #1a2a5a;
+  --color-royal-blue-darkest: #131f43;
+  --color-scheme-2-text: var(--color-neutral-darkest);
+  --color-scheme-2-background: var(--color-royal-blue-lightest);
+  --color-scheme-2-border: var(--opacity-neutral-darkest-15);
+  --color-scheme-2-accent: var(--color-royal-blue);
+  --color-scheme-2-foreground: var(--color-royal-blue-lighter);
+  --color-red: #b00101;
+
+  /* ********************************** */
+  /* BUTTON */
+  /* --- 1. ПАЛІТРА (Base Colors) --- */
+
+  --color-blue-primary: #4169e1;
+  --color-blue-soft: #e8eeff;
+  --color-blue-medium: #7a96ea;
+  --color-blue-dark: #1a2a5a;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Напівпрозорі кольори (Alpha) */
+  --color-black-a05: rgba(0, 0, 0, 0.05);
+  --color-black-a15: rgba(0, 0, 0, 0.15);
+  --color-white-a0: rgba(255, 255, 255, 0);
+
+  /* --- 2. КНОПКИ (Button Semantic Tokens) --- */
+
+  /* Загальні параметри */
+  --btn-radius: 8px;
+  --btn-border-width: 1px;
+  --btn-border-style: solid;
+  --btn-disabled-opacity: 0.3;
+
+  /* Відступи для кнопок з текстом */
+  --btn-pd-l: 6px 12px; /* Велика (L) */
+  --btn-pd-s: 4px 10px; /* Мала (S) */
+
+  /* Відступи для кнопок-іконок (щоб були квадратними) */
+  --btn-pd-icon-l: 6px;
+  --btn-pd-icon-s: 4px;
+
+  /* Primary (Синя) */
+
+  --btn-primary-bg: var(--color-blue-primary);
+  --btn-primary-text: var(--color-white);
+  --btn-primary-border: var(--color-blue-primary);
+
+  --btn-primary-hover-bg: var(--color-blue-soft);
+  --btn-primary-hover-text: var(--color-black);
+
+  --btn-primary-active-bg: var(--color-blue-medium);
+  --btn-primary-active-text: var(--color-black);
+
+  /* Secondary (Сіра з бордером) */
+  --btn-secondary-bg: var(--color-black-a05);
+  --btn-secondary-text: var(--color-black);
+  --btn-secondary-border: var(--color-black-a15);
+
+  /* Secondary Hover  */
+  --btn-secondary-hover-bg: var(--color-blue-primary);
+  --btn-secondary-hover-text: var(--color-white);
+  --btn-secondary-hover-border: var(--color-white-a0);
+
+  /* Secondary Active  */
+  --btn-secondary-active-bg: var(--color-blue-dark);
+  --btn-secondary-active-text: var(--color-white);
+  --btn-secondary-active-border: var(--color-white-a0);
+
+  /* *********************************** */
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+/* RESET */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+address {
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* html {
+  scroll-behavior: smooth;
+} */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+}
+
+/* BASE */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-nunito-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/*  --font-heading  */
+/* section {
+  padding: 64px 0;
+} */
+
+/* Styles for Mobile devices */
+
+.container {
+  width: 100%;
+  min-width: 320px;
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Styles for Tablet devices */
+
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+}
+
+/* Styles for Desktop devices */
+
+@media only screen and (min-width: 1440px) {
+  /* section {
+    padding: 72px 0;
+  } */
+
+  .container {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+}
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+} */

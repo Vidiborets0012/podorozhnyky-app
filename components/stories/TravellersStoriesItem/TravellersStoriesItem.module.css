@@ -1,0 +1,265 @@
+.storyCard {
+  width: 100%;
+  background-color: var(--color-royal-blue-lighter);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 1440px) {
+  .content {
+    height: 210px;
+  }
+}
+.storyImg {
+  width: 100%;
+  height: 223px;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+  .storyCard {
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .storyCard {
+    width: calc((100% - 48px) / 3);
+  }
+}
+
+.storyCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--opacity-neutral-darkest-5);
+}
+
+.storyContent {
+  /* padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.storyRegion {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-neutral-darkest);
+  margin-bottom: 8px;
+}
+
+@media screen and (min-width: 1440px) {
+  .storyRegion {
+    font-size: 16px;
+  }
+}
+
+.storyContent h3 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.5;
+  /* height: 160px; */
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 1440px) {
+  .storyContent h3 {
+    font-size: 26px;
+  }
+}
+
+.storyArticle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 1440px) {
+  .storyArticle {
+    font-size: 18px;
+  }
+}
+
+.storyMeta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+.author {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media screen and (min-width: 1440px) {
+  .author {
+    font-size: 16px;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.favoriteCount {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-right: 8px;
+}
+
+.styles.point {
+}
+.savedNumber {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-neutral-darkest);
+  margin-left: 8px;
+  margin-right: 2px;
+}
+@media screen and (min-width: 1440px) {
+  .favoriteCount {
+    font-size: 16px;
+  }
+}
+
+.icon {
+  fill: var(--color-neutral-darkest);
+  width: 16px;
+  height: 16px;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (min-width: 1440px) {
+  .cardActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+  }
+  .storyViewBtn {
+    width: 315px;
+    height: 48px;
+  }
+}
+
+/* buttons */
+
+.storyViewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 229px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  background-color: var(--opacity-neutral-darkest-5);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-neutral-darkest);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+@media screen and (min-width: 768px) {
+  .storyViewBtn {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .storyViewBtn {
+    font-size: 18px;
+  }
+}
+
+.storyViewBtn:hover {
+  background-color: var(--color-royal-blue);
+  color: var(--color-white);
+}
+
+.likeBtnNotSaved {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  background-color: var(--opacity-neutral-darkest-5);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.iconNotSaved {
+  fill: var(--color-neutral-darkest);
+}
+
+.likeBtnNotSaved:hover {
+  background-color: var(--color-royal-blue);
+  color: var(--color-white);
+}
+
+.likeBtnNotSaved:hover .iconNotSaved {
+  fill: var(--color-white);
+}
+
+.iconSaved {
+  fill: var(--color-white);
+}
+
+.likeBtnSaved {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--opacity-transparent);
+  background-color: var(--color-royal-blue-darker);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.likeBtnSaved:hover {
+  background-color: var(--color-royal-blue);
+  color: var(--color-white);
+}
+
+.savedNumber {
+  font-size: 16px;
+}

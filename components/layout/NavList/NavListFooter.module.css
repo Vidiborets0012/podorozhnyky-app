@@ -1,0 +1,76 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.tabLink {
+  display: none;
+}
+.listNav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 36px;
+  margin-bottom: 32px;
+  color: #131f43;
+}
+.listItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.linkNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  line-height: 1.5;
+  line-height: 150%;
+  font-size: 16px;
+  transition: all 250ms ease-in;
+}
+.linkNav:hover {
+  opacity: 0.8;
+  border-radius: 8px;
+  outline: 2px solid #131f43;
+  outline-offset: 8px;
+}
+.linkNav:focus {
+  opacity: 0.3;
+  outline: 2px solid #131f43;
+  outline-offset: 8px;
+  border-radius: 8px;
+}
+
+.linkNav:focus:not(:active):not(:hover) {
+  opacity: initial;
+}
+
+@media screen and (min-width: 768px) {
+  .navigation {
+    margin: 0;
+    margin-top: 32px;
+    flex-direction: row;
+    flex-basis: 100%;
+    width: 100%;
+  }
+  .listNav {
+    flex-direction: row;
+
+    margin: 0;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .tabLink {
+    display: none;
+  }
+  .navigation {
+    gap: 36px;
+    margin: 0;
+  }
+  .navigation {
+    justify-self: end;
+  }
+}

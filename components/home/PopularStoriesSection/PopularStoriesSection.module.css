@@ -1,0 +1,67 @@
+.popularStoriesSection {
+  padding: 72px 0;
+}
+
+.storiesTitle {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-neutral-darkest);
+  margin-bottom: 24px;
+}
+
+.lookAllBtn {
+  border: 1px solid var(--color-royal-blue);
+  background-color: var(--color-royal-blue);
+  color: var(--color-white);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 48px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lookAllBtn:hover {
+  background-color: var(--color-royal-blue-lighter);
+  transform: translateY(-1px);
+  color: var(--color-neutral-darkest);
+  box-shadow: 0 4px 12px;
+}
+
+.lookAllBtn:active {
+  transform: translateY(0);
+  color: var(--color-neutral-darkest);
+  background-color: var(--color-royal-blue-light);
+}
+
+.storiesSectionFooter {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .storiesTitle {
+    font-size: 44px;
+  }
+  .lookAllBtn {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .storiesTitle {
+    font-size: 52px;
+    margin-bottom: 40px;
+  }
+  .lookAllBtn {
+    font-size: 18px;
+  }
+}
