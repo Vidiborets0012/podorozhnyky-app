@@ -1,20 +1,121 @@
-// "use client";
+"use client";
 
-// import Image from 'next/image';
-// import styles from './TravellersStoriesItem.module.css';
-// import { Story } from '@/types/index';
-// import Link from 'next/link';
-// import { useState } from 'react';
-// import { useMutation } from '@tanstack/react-query';
-// import { addToFavorite, removeFromFavorite } from '@/lib/api/clientApi';
-// import AuthNavModal from '@/components/modals/AuthNavModal/AuthNavModal';
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useState } from "react";
+// import { Story } from "@/types";
+// import { addToFavorite, removeFromFavorite } from "@/lib/api/clientApi";
+// import useAuthStore from "@/lib/store/authStore";
+// import styles from "./TravellersStoriesItem.module.css";
 
-// import { useRouter } from 'next/navigation';
-
-// interface TravellersStoriesItemProps {
+// interface Props {
 //   story: Story;
 //   isAuthenticated: boolean;
 // }
+
+// export function TravellersStoriesItem({ story, isAuthenticated }: Props) {
+//   const user = useAuthStore((s) => s.user);
+//   const setUser = useAuthStore((s) => s.setUser);
+
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   // 🔥 ЛОКАЛЬНИЙ count для optimistic update
+//   const [localFavoriteCount, setLocalFavoriteCount] = useState(
+//     story.favoriteCount ?? 0,
+//   );
+
+//   const isSaved = user?.savedStories?.includes(story._id) ?? false;
+
+//   const handleToggleLike = async () => {
+//     if (!isAuthenticated || !user) return;
+
+//     const wasSaved = isSaved;
+
+//     // 🔥 1. Оптимістично міняємо count
+//     setLocalFavoriteCount((prev) => (wasSaved ? prev - 1 : prev + 1));
+
+//     try {
+//       setIsLoading(true);
+
+//       let updatedSavedStories: string[];
+
+//       if (wasSaved) {
+//         updatedSavedStories = await removeFromFavorite(story._id);
+//       } else {
+//         updatedSavedStories = await addToFavorite(story._id);
+//       }
+
+//       // 🔥 2. Оновлюємо user у zustand
+//       setUser({
+//         ...user,
+//         savedStories: updatedSavedStories,
+//       });
+//     } catch (error) {
+//       console.error("Toggle favorite failed", error);
+
+//       // ❗ 3. Якщо помилка — відкочуємо count назад
+//       setLocalFavoriteCount((prev) => (wasSaved ? prev + 1 : prev - 1));
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   return (
+//     <li className={styles.storyCard}>
+//       <Image
+//         src={
+//           story?.img ??
+//           "https://ac.goit.global/fullstack/react/default-avatar.jpg"
+//         }
+//         alt={story.title}
+//         className={styles.storyImg}
+//         width={400}
+//         height={200}
+//       />
+
+//       <div className={styles.storyContent}>
+//         <div className={styles.content}>
+//           <span className={styles.storyRegion}>
+//             {story.category?.name ?? "Без категорії 😱"}
+//           </span>
+
+//           <h3>{story?.title ?? "Назви ще немає 🥲"}</h3>
+
+//           <p className={styles.storyArticle}>
+//             {story?.article ?? "Опису поки не додали 🤨"}
+//           </p>
+//         </div>
+
+//         <StoryAuthor
+//           author={story.ownerId}
+//           date={new Date(story.date).toLocaleDateString("uk-UA")}
+//           savedNumber={localFavoriteCount}
+//         />
+
+//         <div className={styles.cardActions}>
+//           <Link className={styles.storyViewBtn} href={`/stories/${story._id}`}>
+//             Переглянути статтю
+//           </Link>
+
+//           <button
+//             className={isSaved ? styles.likeBtnSaved : styles.likeBtnNotSaved}
+//             onClick={handleToggleLike}
+//             disabled={isLoading}
+//           >
+//             <svg
+//               className={isSaved ? styles.iconSaved : styles.iconNotSaved}
+//               width={24}
+//               height={24}
+//             >
+//               <use href="/sprite-final-opt.svg#icon-bookmark" />
+//             </svg>
+//           </button>
+//         </div>
+//       </div>
+//     </li>
+//   );
+// }
+
 // interface StoryAuthorProps {
 //   author: Author;
 //   date: string;
@@ -27,155 +128,29 @@
 //   avatarUrl: string;
 // };
 
-// export function TravellersStoriesItem({
-//   story,
-//   isAuthenticated,
-// }: TravellersStoriesItemProps) {
-//   const [isSaved, setIsSaved] = useState<boolean>(story.isSaved);
-//   const [favoriteCount, setFavoriteCount] = useState<number>(
-//     story.favoriteCount,
-//   );
-//   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-//   const router = useRouter();
-
-//   const mutationAdd = useMutation({
-//     mutationFn: (storyId: string) => addToFavorite(storyId),
-//     onMutate: async () => {
-//       setIsSaved(true);
-//       setFavoriteCount((prev) => prev + 1);
-//     },
-//     onError: () => {
-//       //  якщо щось з базою пішло не так, повертаємо ui як було
-//       setIsSaved(false);
-//       setFavoriteCount((prev) => prev - 1);
-//       alert(
-//         'Упсс...Збереження до улюблених НЕ пройшло успішно. Спробуйте ще раз',
-//       );
-//     },
-//     onSuccess: () => {
-//       console.log('Story was added to favorite successfully');
-//     },
-//   });
-
-//   const mutationRemove = useMutation({
-//     mutationFn: (storyId: string) => removeFromFavorite(storyId),
-//     onMutate: async () => {
-//       setIsSaved(false);
-//       setFavoriteCount((prev) => prev - 1);
-//     },
-//     onError: () => {
-//       setIsSaved(true);
-//       setFavoriteCount((prev) => prev + 1);
-//       alert(
-//         'Упсс...Видалення з улюблених НЕ пройшло успішно. Спробуйте ще раз',
-//       );
-//     },
-//     onSuccess: () => {
-//       console.log('Story was removed from favorite successfully');
-//     },
-//   });
-
-//   function handleToggleLike() {
-//     if (isAuthenticated) {
-//       if (!isSaved) {
-//         //якщо до цього було не збережено
-//         mutationAdd.mutate(story._id);
-//       } else {
-//         mutationRemove.mutate(story._id);
-//       }
-//     } else {
-//       setIsModalOpen(true);
-//       // alert(
-//       //   'Щоб зберегти статтю вам треба увійти, якщо ще немає облікового запису — зареєструйтесь.',
-//       // );
-//     }
-//   }
-
-//   const isLoading = mutationAdd.isPending || mutationRemove.isPending;
-
-//   const handleLogIn = async () => {
-//     setIsModalOpen(false);
-//     router.push('/auth/login');
-//   };
-
-//   const handleRegister = async () => {
-//     setIsModalOpen(false);
-//     router.push('/auth/register');
-//   };
-
-//   return (
-//     <>
-//       <li className={styles.storyCard}>
-//         <Image
-//           src={story.img}
-//           alt={story.title}
-//           className={styles.storyImg}
-//           width={400}
-//           height={200}></Image>
-//         <div className={styles.storyContent}>
-//           <div className={styles.content}>
-//             <span className={styles.storyRegion}>{story.category.name}</span>
-//             <h3>{story.title}</h3>
-//             <p className={styles.storyArticle}>{story.article}</p>
-//           </div>
-//           <StoryAuthor
-//             author={story.ownerId}
-//             date={new Date(story.date).toLocaleDateString('uk-UA')}
-//             savedNumber={favoriteCount}
-//           />
-//           <div className={styles.cardActions}>
-//             <Link
-//               className={styles.storyViewBtn}
-//               href={`/stories/${story._id}`}>
-//               Переглянути статтю
-//             </Link>
-
-//             <button
-//               className={isSaved ? styles.likeBtnSaved : styles.likeBtnNotSaved}
-//               onClick={handleToggleLike}
-//               disabled={isLoading}>
-//               <svg
-//                 className={isSaved ? styles.iconSaved : styles.iconNotSaved}
-//                 width={24}
-//                 height={24}>
-//                 <use href="/sprite-final-opt.svg#icon-bookmark" />
-//               </svg>
-//             </button>
-//           </div>
-//         </div>
-//       </li>
-//       <AuthNavModal
-//         isOpen={isModalOpen}
-//         onLogIn={handleLogIn}
-//         onRegister={handleRegister}
-//         onClose={() => setIsModalOpen(false)}
-//         title="Помилка під час збереження"
-//         message="Щоб зберегти статтю вам треба увійти, якщо ще немає облікового запису зареєструйтесь"
-//         LoginText="Увійти"
-//         RegisterText="Зареєструватись"
-//       />
-//     </>
-//   );
-// }
-
 // function StoryAuthor({ author, date, savedNumber }: StoryAuthorProps) {
 //   return (
 //     <div className={styles.storyMeta}>
 //       <Image
-//         src={author.avatarUrl}
-//         alt={author.name}
+//         src={
+//           author?.avatarUrl ??
+//           "https://ac.goit.global/fullstack/react/default-avatar.jpg"
+//         }
+//         alt={author?.name ?? "Unknown 😱"}
 //         width={48}
 //         height={48}
-//         className={styles.avatar}></Image>
+//         className={styles.avatar}
+//       />
+
 //       <div>
-//         <h6 className={styles.author}>{author.name}</h6>
+//         <h6 className={styles.author}>{author?.name ?? "Unknown 😱"}</h6>
+
 //         <div className={styles.meta}>
 //           <span className={styles.favoriteCount}>{date}</span>
 //           <span className={styles.point}>●</span>
 //           <span className={styles.savedNumber}>{savedNumber}</span>
-//           <svg
-//             width={24}
-//             height={24}>
+
+//           <svg width={24} height={24}>
 //             <use href="/sprite-final-opt.svg#icon-bookmark" />
 //           </svg>
 //         </div>
@@ -184,65 +159,35 @@
 //   );
 // }
 
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Story } from "@/types";
-import { addToFavorite, removeFromFavorite } from "@/lib/api/clientApi";
-import useAuthStore from "@/lib/store/authStore";
+import { useToggleSavedStory } from "@/lib/hooks/useToggleSavedStory";
 import styles from "./TravellersStoriesItem.module.css";
 
 interface Props {
   story: Story;
-  isAuthenticated: boolean;
 }
 
-export function TravellersStoriesItem({ story, isAuthenticated }: Props) {
-  const user = useAuthStore((s) => s.user);
-  const setUser = useAuthStore((s) => s.setUser);
+export function TravellersStoriesItem({ story }: Props) {
+  const { isSaved, isLoading, toggle } = useToggleSavedStory(story._id);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  // 🔥 ЛОКАЛЬНИЙ count для optimistic update
   const [localFavoriteCount, setLocalFavoriteCount] = useState(
     story.favoriteCount ?? 0,
   );
 
-  const isSaved = user?.savedStories?.includes(story._id) ?? false;
-
   const handleToggleLike = async () => {
-    if (!isAuthenticated || !user) return;
-
     const wasSaved = isSaved;
 
-    // 🔥 1. Оптимістично міняємо count
+    // 🔥 optimistic count
     setLocalFavoriteCount((prev) => (wasSaved ? prev - 1 : prev + 1));
 
-    try {
-      setIsLoading(true);
+    const success = await toggle();
 
-      let updatedSavedStories: string[];
-
-      if (wasSaved) {
-        updatedSavedStories = await removeFromFavorite(story._id);
-      } else {
-        updatedSavedStories = await addToFavorite(story._id);
-      }
-
-      // 🔥 2. Оновлюємо user у zustand
-      setUser({
-        ...user,
-        savedStories: updatedSavedStories,
-      });
-    } catch (error) {
-      console.error("Toggle favorite failed", error);
-
-      // ❗ 3. Якщо помилка — відкочуємо count назад
+    // ❗ rollback якщо помилка
+    if (!success) {
       setLocalFavoriteCount((prev) => (wasSaved ? prev + 1 : prev - 1));
-    } finally {
-      setIsLoading(false);
     }
   };
 
