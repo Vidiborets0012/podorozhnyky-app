@@ -62,14 +62,23 @@ export async function register(payload: RegisterRequest): Promise<User> {
   return res.data;
 }
 
+// export async function addToFavorite(storyId: string): Promise<string[]> {
+//   const res = await api.post(`/stories/${storyId}/save`);
+//   return res.data;
+// }
+
+// export async function removeFromFavorite(storyId: string): Promise<string[]> {
+//   const res = await api.delete(`/stories/${storyId}/save`);
+//   return res.data;
+// }
 export async function addToFavorite(storyId: string): Promise<string[]> {
-  const res = await api.post(`/stories/${storyId}/save`);
-  return res.data;
+  const res = await api.post<{ data: string[] }>(`/stories/${storyId}/save`);
+  return res.data.data;
 }
 
 export async function removeFromFavorite(storyId: string): Promise<string[]> {
-  const res = await api.delete(`/stories/${storyId}/save`);
-  return res.data;
+  const res = await api.delete<{ data: string[] }>(`/stories/${storyId}/save`);
+  return res.data.data;
 }
 
 // отримання всіх юзерів
