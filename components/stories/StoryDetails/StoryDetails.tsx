@@ -4,21 +4,12 @@ import Image from "next/image";
 import { Story } from "@/types";
 import styles from "./StoryDetails.module.css";
 import SaveButton from "./SaveButton.client";
-// import useAuthStore from "@/lib/store/authStore";
 
 interface StoryDetailsProps {
   story: Story;
 }
 
 export default function StoryDetails({ story }: StoryDetailsProps) {
-  // const user = useAuthStore((s) => s.user);
-  // console.log("USER:", user);
-  // console.log("savedStories:", user?.savedStories);
-  // console.log("type:", typeof user?.savedStories);
-  // const isSaved = user?.savedStories?.includes(story._id) ?? false;
-  // const savedStories = user?.savedStories ?? [];
-  // const isSaved = savedStories.includes(story._id);
-
   if (!story || !story.img) return null;
 
   return (
