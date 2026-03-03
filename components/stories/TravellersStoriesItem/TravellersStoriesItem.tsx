@@ -8,45 +8,12 @@ import { useToggleSavedStory } from "@/lib/hooks/useToggleSavedStory";
 import styles from "./TravellersStoriesItem.module.css";
 import AuthNavModal from "@/components/modals/AuthNavModal/AuthNavModal";
 import { useRouter } from "next/navigation";
+// import StorySaveIconButton from "./StorySaveIconButton";
 
 interface Props {
   story: Story;
 }
 
-// export function TravellersStoriesItem({ story }: Props) {
-//   const { isSaved, isLoading, toggle } = useToggleSavedStory(story._id);
-//   const router = useRouter();
-
-//   // const [localFavoriteCount, setLocalFavoriteCount] = useState(
-//   //   story.favoriteCount ?? 0,
-//   // );
-//   const initialCount = story.favoriteCount ?? 0;
-
-//   const [localFavoriteCount, setLocalFavoriteCount] = useState(initialCount);
-//   const [prevIsSaved, setPrevIsSaved] = useState(isSaved);
-
-//   useEffect(() => {
-//     if (prevIsSaved !== isSaved) {
-//       setLocalFavoriteCount((prev) => (isSaved ? prev + 1 : prev - 1));
-//       setPrevIsSaved(isSaved);
-//     }
-//   }, [isSaved, prevIsSaved]);
-
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-
-//   const handleToggleLike = async () => {
-//     const wasSaved = isSaved;
-
-//     setLocalFavoriteCount((prev) => (wasSaved ? prev - 1 : prev + 1));
-
-//     const success = await toggle();
-
-//     if (!success) {
-//       setLocalFavoriteCount((prev) => (wasSaved ? prev + 1 : prev - 1));
-
-//       setIsModalOpen(true);
-//     }
-//   };
 export function TravellersStoriesItem({ story }: Props) {
   const { isSaved, isLoading, toggle } = useToggleSavedStory(story._id);
   const router = useRouter();
@@ -58,6 +25,7 @@ export function TravellersStoriesItem({ story }: Props) {
 
   // 🔥 Derived значення (без useState!)
   const localFavoriteCount = isSaved ? baseCount + 1 : baseCount;
+  // const localFavoriteCount = story.favoriteCount ?? 0;
 
   const handleToggleLike = async () => {
     const success = await toggle();
@@ -107,7 +75,6 @@ export function TravellersStoriesItem({ story }: Props) {
             >
               Переглянути статтю
             </Link>
-
             <button
               className={isSaved ? styles.likeBtnSaved : styles.likeBtnNotSaved}
               onClick={handleToggleLike}
@@ -121,6 +88,7 @@ export function TravellersStoriesItem({ story }: Props) {
                 <use href="/sprite-final-opt.svg#icon-bookmark" />
               </svg>
             </button>
+            {/* <StorySaveIconButton storyId={story._id} /> */}
           </div>
         </div>
       </li>
@@ -186,4 +154,12 @@ function StoryAuthor({ author, date, savedNumber }: StoryAuthorProps) {
       </div>
     </div>
   );
+}
+
+{
+  /* <Button iconOnly aria-label="Save">
+              <svg width="24" height="24">
+                <use href="/sprite-final-opt.svg#icon-bookmark" />
+              </svg>
+            </Button> */
 }
