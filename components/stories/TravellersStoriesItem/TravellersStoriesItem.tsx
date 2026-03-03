@@ -13,26 +13,56 @@ interface Props {
   story: Story;
 }
 
+// export function TravellersStoriesItem({ story }: Props) {
+//   const { isSaved, isLoading, toggle } = useToggleSavedStory(story._id);
+//   const router = useRouter();
+
+//   // const [localFavoriteCount, setLocalFavoriteCount] = useState(
+//   //   story.favoriteCount ?? 0,
+//   // );
+//   const initialCount = story.favoriteCount ?? 0;
+
+//   const [localFavoriteCount, setLocalFavoriteCount] = useState(initialCount);
+//   const [prevIsSaved, setPrevIsSaved] = useState(isSaved);
+
+//   useEffect(() => {
+//     if (prevIsSaved !== isSaved) {
+//       setLocalFavoriteCount((prev) => (isSaved ? prev + 1 : prev - 1));
+//       setPrevIsSaved(isSaved);
+//     }
+//   }, [isSaved, prevIsSaved]);
+
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+
+//   const handleToggleLike = async () => {
+//     const wasSaved = isSaved;
+
+//     setLocalFavoriteCount((prev) => (wasSaved ? prev - 1 : prev + 1));
+
+//     const success = await toggle();
+
+//     if (!success) {
+//       setLocalFavoriteCount((prev) => (wasSaved ? prev + 1 : prev - 1));
+
+//       setIsModalOpen(true);
+//     }
+//   };
 export function TravellersStoriesItem({ story }: Props) {
   const { isSaved, isLoading, toggle } = useToggleSavedStory(story._id);
   const router = useRouter();
 
-  const [localFavoriteCount, setLocalFavoriteCount] = useState(
-    story.favoriteCount ?? 0,
-  );
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // 🔥 БАЗОВИЙ лічильник з бекенду
+  const baseCount = story.favoriteCount ?? 0;
+
+  // 🔥 Derived значення (без useState!)
+  const localFavoriteCount = isSaved ? baseCount + 1 : baseCount;
+
   const handleToggleLike = async () => {
-    const wasSaved = isSaved;
-
-    setLocalFavoriteCount((prev) => (wasSaved ? prev - 1 : prev + 1));
-
     const success = await toggle();
 
     if (!success) {
-      setLocalFavoriteCount((prev) => (wasSaved ? prev + 1 : prev - 1));
-
       setIsModalOpen(true);
     }
   };
