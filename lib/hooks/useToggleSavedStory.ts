@@ -14,31 +14,46 @@ export function useToggleSavedStory(storyId: string) {
   const isSaved = savedStories.includes(storyId);
 
   const toggle = async () => {
-    console.log("CLICKED");
-    console.log("AUTH:", isAuthenticated);
+    // console.log("CLICKED");
+    // console.log("AUTH:", isAuthenticated);
     if (!isAuthenticated) {
-      console.log("BLOCKED BY AUTH");
+      // console.log("BLOCKED BY AUTH");
       return false;
     }
 
-    console.log("ALLOWED");
+    // console.log("ALLOWED");
+    // 🟢 OPTIMISTIC UPDATE
+    if (isSaved) {
+      removeSavedStory(storyId);
+    } else {
+      addSavedStory(storyId);
+    }
 
     try {
       setIsLoading(true);
 
       if (isSaved) {
-        console.log("CALL removeFromFavorite");
+        // console.log("CALL removeFromFavorite");
         await removeFromFavorite(storyId);
-        removeSavedStory(storyId);
+        // removeSavedStory(storyId);
       } else {
         console.log("CALL addToFavorite");
         await addToFavorite(storyId);
-        addSavedStory(storyId);
+        // addSavedStory(storyId);
       }
 
       return true;
-    } catch (error) {
-      console.error("Toggle failed", error);
+    } catch {
+      // console.error("Toggle failed", error);
+      // return false;
+      // 🔴 ROLLBACK
+      if (isSaved) {
+        addSavedStory(storyId);
+      } else {
+        // setIsLoading(false);
+        removeSavedStory(storyId);
+      }
+      // toast.error(error?.message || "Не вдалося змінити статус збереження");
       return false;
     } finally {
       setIsLoading(false);
