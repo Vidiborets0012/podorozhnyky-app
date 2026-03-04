@@ -104,6 +104,22 @@
   --btn-secondary-active-border: var(--color-white-a0);
 
   /* *********************************** */
+
+  /* --- 3. Посилання (Link Semantic Tokens) --- */
+
+  --light-gray: #d8d8d8;
+
+  /* Загальні параметри */
+  --link-border-radius: 8px;
+  --link-border-width: 1px;
+  --link-border-style: solid;
+  --link-disabled-opacity: 0.3;
+
+  /* Відступи для посилань з текстом */
+  --link-pd: 0 8px;
+
+  /* Відступи для посилань-іконок */
+  --link-pd-icon: 2px;
 }
 
 /* @media (prefers-color-scheme: dark) {

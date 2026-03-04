@@ -1,0 +1,55 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-black);
+  background-color: var(--color-white-a0);
+
+  border-radius: var(--link-border-radius);
+  border-width: var(--link-border-width);
+  border-style: var(--link-border-style);
+  border-color: var(--color-white-a0);
+
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* text variant */
+.text {
+  padding: var(--link-pd);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* icon variant */
+.icon {
+  padding: var(--link-pd-icon);
+}
+
+.icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* стани */
+
+.link:hover,
+.link:focus-visible {
+  border-color: var(--color-black);
+}
+
+.link:active {
+  border-color: var(--color-black);
+  background-color: var(--light-gray);
+}
+
+/* disabled */
+.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+  cursor: default;
+}
