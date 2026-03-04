@@ -9,7 +9,23 @@ interface TanStackProviderProps {
 }
 
 function TanStackProvider({ children }: TanStackProviderProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  // const [queryClient] = useState(() => new QueryClient());
+
+  // ✅ QueryClient створюється один раз
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            // 5 хвилин дані вважаються свіжими
+            staleTime: 1000 * 60 * 5,
+            // не перезапитуємо при фокусі
+            refetchOnWindowFocus: false,
+            retry: 1,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>

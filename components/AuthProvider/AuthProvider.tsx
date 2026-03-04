@@ -1,76 +1,66 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
-// import { usePathname, useRouter } from "next/navigation";
+import { ReactNode, useEffect } from "react";
 import useAuthStore from "@/lib/store/authStore";
-import { checkSession } from "@/lib/api/clientApi";
+// import { checkSession } from "@/lib/api/clientApi";
 import GlobalLoader from "../common/GlobalLoader/GlobalLoader";
+import { useCurrentUser } from "@/lib/hooks/useCurrentUser";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  // const pathname = usePathname();
-  // const router = useRouter();
-
   const setUser = useAuthStore((state) => state.setUser);
   const clearIsAuthenticated = useAuthStore(
     (state) => state.clearIsAuthenticated,
   );
-  // const logout = useAuthStore((state) => state.logout);
-  const [checking, setChecking] = useState(true);
 
-  // const isPrivateRoute = (p: string) =>
-  //   p.startsWith("/profile") ||
-  //   p.startsWith("/stories/create") ||
-  //   (p.startsWith("/stories/") && p.includes("/edit"));
+  // ✅ React Query керує user
+  const { data: user, isLoading, isError } = useCurrentUser();
 
-  // const isAuthRoute = (p: string) =>
-  //   p.startsWith("/auth/login") ||
-  //   p.startsWith("/auth/register") ||
-  //   p.startsWith("/auth/");
-
+  // ✅ Синхронізуємо Zustand з React Query
   useEffect(() => {
-    let mounted = true;
-
-    async function verify() {
-      setChecking(true);
-      try {
-        const user = await checkSession();
-        if (!mounted) return;
-
-        if (user) {
-          setUser(user);
-
-          //   if (pathname && isAuthRoute(pathname)) {
-          //     router.replace("/");
-          //   }
-          // } else {
-          //   clearIsAuthenticated();
-
-          //   if (pathname && isPrivateRoute(pathname)) {
-          //     router.replace("/auth/login");
-          //   }
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-        clearIsAuthenticated();
-
-        // if (pathname && isPrivateRoute(pathname)) {
-        //   router.replace("/auth/login");
-        // }
-      } finally {
-        if (mounted) setChecking(false);
-      }
+    if (user) {
+      setUser(user);
+    } else if (isError) {
+      clearIsAuthenticated();
     }
+  }, [user, isError, setUser, clearIsAuthenticated]);
 
-    verify();
-
-    return () => {
-      mounted = false;
-    };
-  }, [setUser, clearIsAuthenticated]);
-
-  if (checking) {
+  // ⚠️ Показуємо loader лише поки перевіряється сесія
+  if (isLoading) {
     return <GlobalLoader />;
   }
+
+  // const [checking, setChecking] = useState(true);
+
+  // useEffect(() => {
+  //   let mounted = true;
+
+  //   async function verify() {
+  //     setChecking(true);
+  //     try {
+  //       const user = await checkSession();
+  //       if (!mounted) return;
+
+  //       if (user) {
+  //         setUser(user);
+  //       }
+  //     } catch (error) {
+  //       console.error("Auth check failed:", error);
+  //       clearIsAuthenticated();
+  //     } finally {
+  //       if (mounted) setChecking(false);
+  //     }
+  //   }
+
+  //   verify();
+
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, [setUser, clearIsAuthenticated]);
+
+  // if (checking) {
+  //   return <GlobalLoader />;
+  // }
 
   return <>{children}</>;
 }
